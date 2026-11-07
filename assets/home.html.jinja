@@ -1,0 +1,40 @@
+{% extends 'page.html.jinja' %}
+{% block body %}
+<section class="intro" aria-labelledby="intro-title">
+  <div class="intro-copy">
+    <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> A PERSONAL SPACE FOR IDEAS IN PROGRESS</p>
+    <h1 id="intro-title">Small tools.<br>Thoughtful code.<br><em>An open notebook.</em></h1>
+    <p class="intro-description">Hi, I’m Alex. I write Tcl, build useful things, and keep notes along the way. This is where the experiments, discoveries, and occasional detours live.</p>
+    <div class="intro-links"><a class="button" href="/blog">Read the journal <span aria-hidden="true">↗</span></a><a href="/wiki">Explore my notebook <span aria-hidden="true">→</span></a></div>
+  </div>
+  <aside class="desk-note" aria-label="On my desk">
+    <span class="note-number">FIELD NOTES / 001</span>
+    <svg class="desk-art" viewBox="0 0 260 180" fill="none" aria-hidden="true">
+      <circle cx="171" cy="62" r="36" fill="#dba579"/>
+      <path d="M25 131C72 111 82 162 127 138S198 118 235 137M25 148C72 128 82 179 127 155S198 135 235 154" stroke="#819083" stroke-width="1.5"/>
+      <path d="M112 134V53M112 100C77 99 64 74 68 59C94 61 113 77 112 100ZM112 118C145 118 157 97 154 82C129 84 111 98 112 118ZM112 76C96 64 96 43 105 32C122 44 125 61 112 76Z" stroke="#365a49" stroke-width="2"/>
+    </svg>
+    <h2>Currently tending</h2>
+    <p>A local-first website.<br>A collection of Tcl idioms.<br>The habit of writing things down.</p>
+    <a href="/wiki/now">A little more about now <span aria-hidden="true">↗</span></a>
+  </aside>
+</section>
+
+<section class="journal-section" aria-labelledby="journal-title">
+  <div class="section-heading"><div><p class="eyebrow">01 / THE JOURNAL</p><h2 id="journal-title">Fresh from the workbench</h2></div><a href="/blog">All entries <span aria-hidden="true">↗</span></a></div>
+  <div class="entry-list">
+    {% for post in posts %}
+    <a class="journal-row" href="{{ post.url }}"><time datetime="{{ post.date }}">{{ post.date }}</time><h3>{{ post.title }}</h3><span class="row-arrow" aria-hidden="true">↗</span></a>
+    {% else %}<p>The next entry starts with a blank page. <a href="/blog/_new">Write one →</a></p>{% endfor %}
+  </div>
+</section>
+
+<section class="notebook-section" aria-labelledby="notebook-title">
+  <div class="notebook-intro"><p class="eyebrow">02 / THE NOTEBOOK</p><h2 id="notebook-title">Notes worth<br><em>coming back to.</em></h2><p>A living collection of recipes, reminders, and things I’m figuring out. Always a work in progress.</p><a href="/wiki">Open the notebook <span aria-hidden="true">↗</span></a></div>
+  <div class="note-list">
+    {% for note in notes %}<a href="{{ note.url }}"><span>{{ note.title }}</span><span aria-hidden="true">↗</span></a>{% else %}<a href="/wiki/_new">Start your first note →</a>{% endfor %}
+  </div>
+</section>
+
+<section class="make-it-yours" aria-labelledby="yours-title"><span class="asterisk" aria-hidden="true">✳</span><div><h2 id="yours-title">A place to make your own.</h2><p>This is a working example. Open a page to edit it, or add something new. Your words stay here, even after a restart.</p></div><a href="/wiki/about-this-site">Start exploring →</a></section>
+{% endblock %}

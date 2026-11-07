@@ -1,0 +1,111 @@
+/* The host's visual layer follows the package styles, including on editor pages. */
+:root {
+  --paper: #f8f6f0;
+  --ink: #283b33;
+  --quiet: #657168;
+  --line: #dcded3;
+  --primary: 151 25% 27%;
+  --ring: 151 25% 35%;
+  --background: 45 36% 96%;
+  --foreground: 151 19% 19%;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.65;
+}
+
+body { margin: 0; }
+a { color: inherit; text-underline-offset: 5px; }
+a:hover { color: #9a4f2c; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid #aa633c; outline-offset: 5px; }
+.skip-link { position: absolute; top: -80px; left: 1rem; z-index: 10; background: white; padding: .7rem; }
+.skip-link:focus { top: 1rem; }
+
+.site-header, .site-footer, main { max-width: 1160px; margin: auto; }
+.site-header { background: transparent; padding: 28px 30px; border-bottom: 1px solid var(--line); gap: 24px; }
+.identity { display: flex; align-items: center; gap: 13px; font-size: 17px; font-weight: 650; }
+.identity small { display: block; font-size: 9px; font-weight: 500; letter-spacing: .12em; color: var(--quiet); }
+.monogram { display: grid; place-items: center; background: var(--ink); color: var(--paper); border-radius: 50%; width: 44px; height: 44px; font: italic 25px Georgia, serif; }
+.site-header nav { gap: 28px; align-items: center; font-size: 13px; }
+.nav-about { border: 1px solid var(--line); border-radius: 30px; padding: 6px 15px; }
+main { min-height: 72vh; padding: 48px 30px 0; }
+
+h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; }
+h1 { letter-spacing: -.045em; }
+h2 { letter-spacing: -.025em; }
+em { font-weight: 400; color: #68785d; }
+.eyebrow { color: var(--quiet); font-size: 10px; font-weight: 650; letter-spacing: .14em; text-transform: uppercase; }
+.status-dot { display: inline-block; height: 7px; width: 7px; border-radius: 50%; background: #8b9e78; margin-right: 7px; }
+.button { display: inline-flex; align-items: center; gap: 28px; color: var(--paper); background: var(--ink); padding: 12px 21px; border: 0; border-radius: 5px; text-decoration: none; font: 500 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.button:hover { color: white; background: #48634d; }
+
+.intro { display: grid; grid-template-columns: 1.65fr 1fr; align-items: center; gap: 72px; padding: 12px 0 66px; }
+.intro h1 { font-size: clamp(40px, 4.8vw, 64px); line-height: 1.1; margin: 24px 0; }
+.intro-description { max-width: 480px; color: var(--quiet); font-size: 15px; line-height: 1.8; }
+.intro-links { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 26px; font-size: 12px; }
+.intro-links > a:not(.button) { text-decoration: none; border-bottom: 1px solid #a7afa1; }
+.desk-note { position: relative; background: #efeee4; border: 1px solid #e0e0d1; padding: 26px 30px 30px; transform: rotate(2deg); box-shadow: 4px 6px 0 #e9e8de; }
+.desk-note::before { content: ""; position: absolute; top: -10px; left: 39%; width: 72px; height: 23px; background: #dad9bfbb; transform: rotate(-8deg); }
+.note-number { font-size: 9px; letter-spacing: .16em; color: var(--quiet); }
+.desk-art { display: block; width: 100%; height: 180px; margin: 14px 0; }
+.desk-note h2 { font-size: 25px; margin: 0; }
+.desk-note p { font-size: 13px; color: var(--quiet); line-height: 1.9; }
+.desk-note a { font-size: 11px; }
+
+.journal-section { border-top: 1px solid var(--line); padding: 38px 0 52px; }
+.section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 24px; }
+.section-heading h2 { margin: 8px 0 0; font-size: 33px; }
+.section-heading > a { font-size: 12px; white-space: nowrap; }
+.journal-row { display: grid; grid-template-columns: 125px 1fr 35px; gap: 18px; align-items: center; padding: 22px 0; border-top: 1px solid var(--line); text-decoration: none; }
+.journal-row time { color: var(--quiet); font-size: 11px; font-variant-numeric: tabular-nums; }
+.journal-row h3 { font-size: 23px; margin: 0; }
+.row-arrow { text-align: right; font-size: 22px; }
+
+.notebook-section { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; padding: 38px; background: #edf0e7; border: 1px solid #e0e5d8; }
+.notebook-intro h2 { font-size: 35px; line-height: 1.2; margin: 12px 0 20px; }
+.notebook-intro p:not(.eyebrow) { font-size: 13px; color: var(--quiet); max-width: 290px; }
+.notebook-intro a { font-size: 12px; }
+.note-list { align-self: center; }
+.note-list a { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 19px 0; border-bottom: 1px solid #cfd8c8; text-decoration: none; font-size: 15px; }
+.note-list a:first-child { border-top: 1px solid #cfd8c8; }
+.make-it-yours { display: flex; align-items: center; gap: 24px; padding: 48px 0; }
+.asterisk { font-size: 52px; color: #b57c55; line-height: 1; }
+.make-it-yours h2 { margin: 0 0 5px; font-size: 25px; }
+.make-it-yours p { font-size: 12px; color: var(--quiet); margin: 0; max-width: 580px; }
+.make-it-yours > a { margin-left: auto; white-space: nowrap; font-size: 12px; }
+.site-footer { display: flex; justify-content: space-between; gap: 20px; padding: 24px 30px; border-top: 1px solid var(--line); background: transparent; color: var(--quiet); font-size: 10px; text-align: left; }
+
+/* The same palette and spacing carry through package indexes, content, and forms. */
+main > h1 { font-size: 48px; }
+.cards { margin-top: 28px; margin-bottom: 60px; gap: 20px; }
+.card { background: #fdfcf8; border: 1px solid var(--line); border-radius: 4px; box-shadow: none; }
+.card h2 { font-size: 26px; }
+.card > span:last-child { font-size: 12px; }
+article { background: #fdfcf8; border: 1px solid var(--line); border-radius: 4px; margin: 20px 0; padding: clamp(22px, 5vw, 60px); }
+article h1 { font-size: clamp(30px, 4vw, 46px); }
+article p, article li { max-width: 75ch; }
+.actions { flex-wrap: wrap; align-items: center; }
+details { margin-bottom: 45px; }
+input, textarea { max-width: 100%; }
+form { margin-bottom: 48px; }
+form button[type="submit"] { background: var(--ink); color: var(--paper); }
+pre { overflow-x: auto; }
+
+@media (max-width: 760px) {
+  .site-header { flex-wrap: wrap; padding: 20px; }
+  .site-header nav { justify-content: space-between; width: 100%; gap: 15px; }
+  main { padding: 30px 20px 0; }
+  .intro { grid-template-columns: 1fr; gap: 40px; padding-bottom: 48px; }
+  .intro h1 { font-size: clamp(37px, 8.5vw, 56px); }
+  .desk-note { transform: none; padding: 24px; }
+  .desk-art { height: 155px; }
+  .section-heading h2 { font-size: 28px; }
+  .journal-row { grid-template-columns: 1fr 25px; gap: 6px; }
+  .journal-row time { grid-column: 1 / -1; }
+  .journal-row h3 { font-size: 22px; }
+  .notebook-section { grid-template-columns: 1fr; gap: 18px; padding: 25px; }
+  .make-it-yours { flex-wrap: wrap; gap: 16px; }
+  .make-it-yours > div { flex: 1; }
+  .make-it-yours > a { margin-left: 0; }
+  .site-footer { flex-direction: column; gap: 7px; padding: 22px 20px; }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "example-personal-site",
+  "version": "0.1.0",
+  "scripts": {"start": "exec \"$PROJECT_HOME/bin/example-personal-site\" \"$@\""},
+  "dependencies": {
+    "tcl": ">=8.6.0,<10.0.0",
+    "twebserver": "^1.47.55",
+    "web-wiki": "0.1.0",
+    "web-blog": "0.1.0",
+    "tpersist": "^0.1.0",
+    "tpathexp": "^1.1.0",
+    "jinja2-tcl": "^0.1.0",
+    "tjson": "^1.0.26",
+    "tdbcsqlite3": ">=1.1.8"
+  },
+  "devDependencies": {}
+}

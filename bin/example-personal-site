@@ -1,0 +1,31 @@
+#!/bin/sh
+set -eu
+
+# Locate the entry point in either the source checkout or the installation prefix.
+site_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+if [ -f "$site_root/lib/example-personal-site0.1.0/main.tcl" ]; then
+    site_root="$site_root/lib/example-personal-site0.1.0"
+fi
+
+# ttrek supplies its Tcl interpreter through PATH; TCLSH also allows an explicit one.
+if [ -n "${TCLSH:-}" ]; then
+    exec "$TCLSH" "$site_root/main.tcl" "$@"
+fi
+
+# Prefer the project's interpreter over another Tcl version installed globally.
+if [ -n "${PROJECT_INSTALL_DIR:-}" ]; then
+    for interpreter in tclsh9.1 tclsh9.0 tclsh8.6 tclsh; do
+        if [ -x "$PROJECT_INSTALL_DIR/bin/$interpreter" ]; then
+            exec "$PROJECT_INSTALL_DIR/bin/$interpreter" "$site_root/main.tcl" "$@"
+        fi
+    done
+fi
+
+for interpreter in tclsh9.1 tclsh9.0 tclsh8.6 tclsh; do
+    if command -v "$interpreter" >/dev/null 2>&1; then
+        exec "$interpreter" "$site_root/main.tcl" "$@"
+    fi
+done
+
+echo "A Tcl interpreter is required." >&2
+exit 1

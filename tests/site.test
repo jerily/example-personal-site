@@ -1,0 +1,128 @@
+package require tcltest 2
+namespace import ::tcltest::*
+package require example-personal-site 0.1.0
+
+proc setup_site {} {
+    set ::sandbox [makeDirectory site-test-data]
+    set ::database [file join $::sandbox site.sqlite3]
+    set ::content [file join $::sandbox content]
+    file copy [file join $::personal_site::root content] $::content
+
+    set ::db [::personal_site::connect $::database]
+    ::personal_site::initialize $::db $::content
+    set ::router [::personal_site::router $::db test-token]
+}
+
+proc cleanup_site {} {
+    $::router destroy
+    ::tpersist::db_disconnect $::db
+    removeDirectory $::sandbox
+}
+
+proc request {method path {body {}} {host localhost:8080} {addr 127.0.0.1}} {
+    set headers [dict create Host $host Content-Type application/x-www-form-urlencoded]
+    ::personal_site::dispatch $::router 8080 \
+        [dict create httpMethod $method path $path headers $headers body $body] \
+        [dict create addr $addr]
+}
+
+test seed-1 {initialization is recorded in SQLite and does not need source afterwards} \
+    -setup setup_site -body {
+        file delete -force $content
+        list [::personal_site::initialize $db $content] \
+            [llength [::web::blog::posts [dict get [::personal_site::stores $db] blog]]]
+    } -cleanup cleanup_site -result {0 3}
+
+test seed-2 {an existing empty database is initialized} -body {
+    set folder [makeDirectory empty-site]
+    set db [::personal_site::connect [file join $folder empty.sqlite3]]
+
+    try {
+        ::personal_site::initialize $db [file join $::personal_site::root content]
+    } finally {
+        ::tpersist::db_disconnect $db
+        removeDirectory $folder
+    }
+} -result 1
+
+test seed-3 {a failed blog import rolls back wiki data and permits a full retry} -body {
+    set folder [makeDirectory failed-seed]
+    file copy [file join $::personal_site::root content] [file join $folder content]
+    set bad [open [file join $folder content blog undated.md] w]
+    puts $bad {# Invalid date}
+    close $bad
+    set db [::personal_site::connect [file join $folder site.sqlite3]]
+
+    try {
+        set failed [catch {::personal_site::initialize $db [file join $folder content]}]
+        file delete [file join $folder content blog undated.md]
+        set retried [::personal_site::initialize $db [file join $folder content]]
+        set wiki [dict get [::personal_site::stores $db] wiki]
+        list $failed $retried [llength [::web::wiki::history $wiki /about-this-site]]
+    } finally {
+        ::tpersist::db_disconnect $db
+        removeDirectory $folder
+    }
+} -result {1 1 1}
+
+test edit-1 {wiki and blog edits and additions survive reconnection without reseeding} \
+    -setup setup_site -body {
+        set results {}
+        foreach {kind path extra} {
+            wiki /about-this-site {}
+            blog /2026-11-07-in-praise-of-small-useful-tools {&published_at=2026-11-07}
+        } {
+            lappend results [dict get [request POST /$kind/_edit$path \
+                {title=Changed&markdown=Browser+edit&revision=1&csrf=test-token}] statusCode]
+            lappend results [dict get [request POST /$kind/_new \
+                "title=New+entry&markdown=Created+here&csrf=test-token$extra"] statusCode]
+        }
+
+        $router destroy
+        ::tpersist::db_disconnect $db
+        file delete -force $content
+        set db [::personal_site::connect $database]
+        ::personal_site::initialize $db $content
+        set router [::personal_site::router $db test-token]
+
+        foreach path {/wiki/about-this-site /blog/2026-11-07-in-praise-of-small-useful-tools} {
+            lappend results [string match {*Browser edit*} [dict get [request GET $path] body]]
+        }
+        foreach path {/wiki/new-entry /blog/2026-11-07-new-entry} {
+            lappend results [string match {*Created here*} [dict get [request GET $path] body]]
+        }
+        set results
+    } -cleanup cleanup_site -result {303 303 303 303 1 1 1 1}
+
+test edit-2 {CSRF failures cannot create content} -setup setup_site -body {
+    list [dict get [request POST /wiki/_new {title=Rejected&markdown=bad&csrf=wrong}] statusCode] \
+        [dict get [request GET /wiki/rejected] statusCode]
+} -cleanup cleanup_site -result {403 404}
+
+test edit-3 {stale saves cannot overwrite current content} -setup setup_site -body {
+    set body {title=Changed&markdown=First&revision=1&csrf=test-token}
+    list [dict get [request POST /wiki/_edit/about-this-site $body] statusCode] \
+        [dict get [request POST /wiki/_edit/about-this-site $body] statusCode]
+} -cleanup cleanup_site -result {303 409}
+
+test local-1 {unrelated Host names are refused before dispatch} -setup setup_site -body {
+    dict get [request GET / {} attacker.example:8080] statusCode
+} -cleanup cleanup_site -result 403
+
+test local-2 {editing requires a loopback connection} -setup setup_site -body {
+    dict get [request GET /wiki/_new {} localhost:8080 192.0.2.1] statusCode
+} -cleanup cleanup_site -result 403
+
+test routes-1 {homepage, collections, local assets, and editors render} -setup setup_site -body {
+    set results {}
+    foreach path {/ /wiki /blog /wiki/_new /blog/_new /site.css /wiki/_assets/markdown-editor.bundle.js} {
+        lappend results [dict get [request GET $path] statusCode]
+    }
+    set results
+} -cleanup cleanup_site -result {200 200 200 200 200 200 200}
+
+test routes-2 {HEAD omits the body and unsupported methods are rejected} -setup setup_site -body {
+    list [dict get [request HEAD /] body] [dict get [request POST /] statusCode]
+} -cleanup cleanup_site -result {{} 405}
+
+cleanupTests

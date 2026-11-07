@@ -1,0 +1,8 @@
+/build/
+/stage/
+/data/
+/ttrek-venv/
+/ttrek-lock.json
+/.ttrek/
+*.sqlite3
+*.sqlite3-*

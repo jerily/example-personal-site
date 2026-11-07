@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A Tcl developer's personal journal, working notes, and small experiments.">
+  <title>{{ title }} · Alex Rivers</title>
+  <link rel="stylesheet" href="{{ assets }}/style.css">
+  <link rel="stylesheet" href="{{ assets }}/editor.css">
+  <link rel="stylesheet" href="/site.css">
+  {% if editing %}<script defer src="{{ assets }}/markdown-editor.bundle.js"></script>{% endif %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="identity" href="/" aria-label="Alex Rivers home">
+      <span class="monogram" aria-hidden="true">ar.</span>
+      <span>Alex Rivers<small>TCL DEVELOPER &amp; CURIOUS HUMAN</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/blog">Journal</a>
+      <a href="/wiki">Notebook</a>
+      <a class="nav-about" href="/wiki/about-this-site">About <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main id="main">{% block body %}{% endblock %}</main>
+  <footer class="site-footer">
+    <span>A small site. A little Tcl. Room to grow.</span>
+    <span>Example profile · <a href="https://github.com/jerily/example-personal-site">View the source ↗</a></span>
+  </footer>
+</body>
+</html>
