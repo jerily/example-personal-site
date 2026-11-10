@@ -1,6 +1,32 @@
 package require tcltest 2
 namespace import ::tcltest::*
-package require example-personal-site 0.1.0
+package require example-personal-site 0.1.1
+
+test dependencies-1 {newer available content packages do not replace the pinned versions} -body {
+    set child [interp create]
+    try {
+        $child eval [list set auto_path $::auto_path]
+        $child eval {
+            package ifneeded web-wiki 0.1.1 {error {newer wiki must not load}}
+            package ifneeded web-blog 0.1.1 {error {newer blog must not load}}
+            package require example-personal-site 0.1.1
+            list [package present web-wiki] [package present web-blog]
+        }
+    } finally {interp delete $child}
+} -result {0.1.0 0.1.0}
+
+test dependencies-2 {an already loaded incompatible content package is rejected} -body {
+    set result {}
+    foreach name {web-wiki web-blog} {
+        set child [interp create]
+        try {
+            $child eval [list set auto_path $::auto_path]
+            $child eval [list package provide $name 0.1.1]
+            lappend result [$child eval {catch {package require example-personal-site 0.1.1}}]
+        } finally {interp delete $child}
+    }
+    set result
+} -result {1 1}
 
 proc setup_site {} {
     set ::sandbox [makeDirectory site-test-data]

@@ -14,6 +14,10 @@ The host owns startup, connections, local editing policy, and the router.
 `web-wiki` and `web-blog` own their schemas, content rules, editors, and revisions.
 Templates and CSS live in `assets/`; Tcl code does not build HTML strings.
 
+This release pins `web-wiki` and `web-blog` to exactly `0.1.0` in both the
+dependency manifest and Tcl runtime. Newer content-package releases are not
+selected automatically, even when available on the package path.
+
 ## Start
 
 In an initialized ttrek project:
@@ -36,7 +40,7 @@ ttrek run -script start
 
 The installed `bin/example-personal-site` launcher can also run directly when
 the dependencies are on the Tcl package path. `TCLSH` selects an interpreter.
-The package supports Tcl 8.6 and 9.x with matching native dependencies.
+The dependency manifest selects Tcl 9.1 and current native dependencies.
 
 Optional arguments use the same start script:
 
