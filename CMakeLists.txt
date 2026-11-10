@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(example-personal-site VERSION 0.1.0 LANGUAGES NONE)
+project(example-personal-site VERSION 0.1.1 LANGUAGES NONE)
 
 # Pure Tcl: installation copies source, templates, and seed content without compiling.
 set(PACKAGE_DIR "lib/example-personal-site${PROJECT_VERSION}")
