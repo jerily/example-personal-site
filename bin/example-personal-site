@@ -3,8 +3,8 @@ set -eu
 
 # Locate the entry point in either the source checkout or the installation prefix.
 site_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-if [ -f "$site_root/lib/example-personal-site0.1.1/main.tcl" ]; then
-    site_root="$site_root/lib/example-personal-site0.1.1"
+if [ -f "$site_root/lib/example-personal-site0.1.2/main.tcl" ]; then
+    site_root="$site_root/lib/example-personal-site0.1.2"
 fi
 
 # ttrek supplies its Tcl interpreter through PATH; TCLSH also allows an explicit one.

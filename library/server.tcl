@@ -36,7 +36,7 @@ proc ::personal_site::serve {database content port} {
     set token [binary encode hex [::twebserver::random_bytes 32]]
     set init [join [list \
         [list set auto_path $::auto_path] \
-        {package require example-personal-site 0.1.1} \
+        {package require example-personal-site 0.1.2} \
         [list ::personal_site::worker $database $port $token]] \n]
     set config [dict create rootdir [file dirname $database] \
         max_request_read_bytes 4259840 gzip off]

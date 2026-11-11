@@ -26,10 +26,10 @@ proc ::personal_site::initialize {connection content} {
             [::tpersist::db_eq [::tpersist::db_col name] [::tpersist::db_value initialized]]]
         set rows [dict get [::tpersist::db_execute $connection $query] rows]
 
-        if {![llength $rows]} {
-            ::web::wiki::initdb $connection
-            ::web::blog::initdb $connection
+        ::web::wiki::initdb $connection
+        ::web::blog::initdb $connection
 
+        if {![llength $rows]} {
             ::web::wiki::sync [dict get $collections wiki] [file join $content wiki]
             ::web::blog::sync [dict get $collections blog] [file join $content blog]
 
