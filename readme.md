@@ -14,7 +14,7 @@ The host owns startup, connections, local editing policy, and the router.
 `web-wiki` and `web-blog` own their schemas, content rules, editors, and revisions.
 Templates and CSS live in `assets/`; Tcl code does not build HTML strings.
 
-This release pins `web-wiki` and `web-blog` to exactly `0.1.0` in both the
+This release pins `web-wiki` and `web-blog` to exactly `0.1.3` in both the
 dependency manifest and Tcl runtime. Newer content-package releases are not
 selected automatically, even when available on the package path.
 
@@ -70,7 +70,8 @@ package schemas, imports both directories, and records an initialization marker.
 A failed import rolls back the whole operation and is retried on the next start.
 An existing empty database is initialized too; file existence is not the check.
 
-Once initialized, startup does not read the content directories again. Browser
+Startup reapplies the packages' idempotent schema/index initialization, including
+on existing databases. Once initialized, startup does not read the content directories again. Browser
 edits, new items, and their history remain in SQLite, even if seed files change
 or disappear. To try a fresh seed, choose another `--database` path.
 
