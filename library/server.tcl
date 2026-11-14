@@ -1,3 +1,7 @@
+# Copyright Jerily LTD. All Rights Reserved.
+# SPDX-FileCopyrightText: 2026 Neofytos Dimitriou (neo@jerily.cy)
+# SPDX-License-Identifier: MIT.
+
 # Worker state belongs to the worker interpreter, including its database and router.
 proc ::personal_site::worker {database port token} {
     variable connection [connect $database]
@@ -36,7 +40,7 @@ proc ::personal_site::serve {database content port} {
     set token [binary encode hex [::twebserver::random_bytes 32]]
     set init [join [list \
         [list set auto_path $::auto_path] \
-        {package require example-personal-site 0.1.2} \
+        {package require example-personal-site 0.1.3} \
         [list ::personal_site::worker $database $port $token]] \n]
     set config [dict create rootdir [file dirname $database] \
         max_request_read_bytes 4259840 gzip off]

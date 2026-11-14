@@ -14,7 +14,7 @@ The host owns startup, connections, local editing policy, and the router.
 `web-wiki` and `web-blog` own their schemas, content rules, editors, and revisions.
 Templates and CSS live in `assets/`; Tcl code does not build HTML strings.
 
-This release pins `web-wiki` and `web-blog` to exactly `0.1.3` in both the
+This release pins `web-wiki` and `web-blog` to exactly `0.1.4` in both the
 dependency manifest and Tcl runtime. Newer content-package releases are not
 selected automatically, even when available on the package path.
 

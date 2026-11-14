@@ -1,3 +1,7 @@
+# Copyright Jerily LTD. All Rights Reserved.
+# SPDX-FileCopyrightText: 2026 Neofytos Dimitriou (neo@jerily.cy)
+# SPDX-License-Identifier: MIT.
+
 # The host owns connections. Each twebserver worker opens its own connection.
 proc ::personal_site::connect {database} {
     ::tpersist::db_connect -database $database -autobegin 0
@@ -12,14 +16,12 @@ proc ::personal_site::stores {connection} {
 # A persistent marker distinguishes a completed import from an empty or failed one.
 # Schema creation, both imports, and the marker commit together or roll back together.
 proc ::personal_site::initialize {connection content} {
+    variable root
     set collections [stores $connection]
     set initialized 0
 
     ::tpersist::db_transaction $connection {
-        set schema [::tpersist::db_define_table personal_site_state {
-            name {type text not_null 1}
-        } -primary_key name]
-        ::tpersist::db_create_table $connection $schema -if_not_exists 1
+        ::tpersist::db_apply_schema $connection [file join $root sql schema.json] -additive true
 
         set query [::tpersist::db_select personal_site_state]
         set query [::tpersist::db_where $query \
