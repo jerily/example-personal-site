@@ -4,16 +4,18 @@ Welcome! This is a working personal-site example for Tcl programmers, developers
 
 ## Make yourself at home
 
-Use **Edit** to change this page. Choose **New page** in the notebook or **New post** in the journal to add something of your own. The editor offers both a visual mode and Markdown source.
+Edit `content/wiki/about.md` in your text editor, save it, and restart the server. Add notebook pages under `content/wiki/` and dated journal entries under `content/blog/`.
 
-Your changes are saved in SQLite, along with revision history. Restarting the server does not replace them with the sample files.
+Your Markdown files are the source of truth. The browser presents the finished pages; writing happens in your own editor.
 
 ## Follow the code
 
-- `library/storage.tcl` opens SQLite and performs the first import atomically.
-- `library/http.tcl` mounts `web-wiki` and `web-blog` on a `tpathexp` router.
+- `library/content.tcl` reads the notebook and journal directories.
+- `library/http.tcl` mounts `web-static-wiki` and `web-static-blog` on a `tpathexp` router.
 - `library/server.tcl` starts a single local `twebserver` worker.
 - `assets/` contains the host templates and stylesheet.
-- `content/` contains the initial Markdown. It is read only during initialization.
+- `content/` contains the Markdown, read afresh at startup.
 
-This demonstration serves only on localhost. There is no cloud setup or account to create.
+The local preview needs no database, cloud setup, or account.
+
+![A notebook and a growing personal website](notebook.svg)

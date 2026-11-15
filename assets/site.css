@@ -1,4 +1,4 @@
-/* The host's visual layer follows the package styles, including on editor pages. */
+/* The host's visual layer follows the read-only content package styles. */
 :root {
   --paper: #f8f6f0;
   --ink: #283b33;
@@ -109,3 +109,5 @@ pre { overflow-x: auto; }
   .make-it-yours > a { margin-left: 0; }
   .site-footer { flex-direction: column; gap: 7px; padding: 22px 20px; }
 }
+
+.markdown img { max-width: 100%; height: auto; }

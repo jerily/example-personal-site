@@ -1,19 +1,19 @@
 {
   "name": "example-personal-site",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "scripts": {
-    "start": "exec \"$PROJECT_HOME/bin/example-personal-site\" \"$@\""
+    "start": {
+      "file": "start.sh"
+    }
   },
   "dependencies": {
     "tcl": ">=9.1.0,<10.0.0",
-    "twebserver": "^1.47.56",
-    "web-wiki": "=0.1.4",
-    "web-blog": "=0.1.4",
-    "tpersist": "^0.1.4",
-    "tpathexp": "^1.1.0",
+    "twebserver": "^1.47.57",
+    "web-static-wiki": "=0.1.8",
+    "web-static-blog": "=0.1.7",
+    "tpathexp": "^1.2.0",
     "jinja2-tcl": "^0.1.1",
-    "tjson": "^1.0.27",
-    "tdbcsqlite3": ">=1.1.8"
+    "tjson": "^1.0.27"
   },
   "devDependencies": {}
 }

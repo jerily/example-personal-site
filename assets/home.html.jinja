@@ -25,16 +25,16 @@
   <div class="entry-list">
     {% for post in posts %}
     <a class="journal-row" href="{{ post.url }}"><time datetime="{{ post.date }}">{{ post.date }}</time><h3>{{ post.title }}</h3><span class="row-arrow" aria-hidden="true">↗</span></a>
-    {% else %}<p>The next entry starts with a blank page. <a href="/blog/_new">Write one →</a></p>{% endfor %}
+    {% else %}<p>The next entry starts with a blank page. New writing is on its way.</p>{% endfor %}
   </div>
 </section>
 
 <section class="notebook-section" aria-labelledby="notebook-title">
   <div class="notebook-intro"><p class="eyebrow">02 / THE NOTEBOOK</p><h2 id="notebook-title">Notes worth<br><em>coming back to.</em></h2><p>A living collection of recipes, reminders, and things I’m figuring out. Always a work in progress.</p><a href="/wiki">Open the notebook <span aria-hidden="true">↗</span></a></div>
   <div class="note-list">
-    {% for note in notes %}<a href="{{ note.url }}"><span>{{ note.title }}</span><span aria-hidden="true">↗</span></a>{% else %}<a href="/wiki/_new">Start your first note →</a>{% endfor %}
+    {% for note in notes %}<a href="{{ note.url }}"><span>{{ note.title }}</span><span aria-hidden="true">↗</span></a>{% else %}<p>The notebook is waiting for its first note.</p>{% endfor %}
   </div>
 </section>
 
-<section class="make-it-yours" aria-labelledby="yours-title"><span class="asterisk" aria-hidden="true">✳</span><div><h2 id="yours-title">A place to make your own.</h2><p>This is a working example. Open a page to edit it, or add something new. Your words stay here, even after a restart.</p></div><a href="/wiki/about-this-site">Start exploring →</a></section>
+<section class="make-it-yours" aria-labelledby="yours-title"><span class="asterisk" aria-hidden="true">✳</span><div><h2 id="yours-title">A place to make your own.</h2><p>A journal for discoveries and a notebook for ideas in progress. A few small pages, with room for whatever comes next.</p></div><a href="/wiki/about">Start exploring →</a></section>
 {% endblock %}

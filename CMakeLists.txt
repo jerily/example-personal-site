@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
-project(example-personal-site VERSION 0.1.3 LANGUAGES NONE)
+project(example-personal-site VERSION 0.2.0 LANGUAGES NONE)
 
-# Pure Tcl: installation copies source, templates, and seed content without compiling.
+# Pure Tcl: installation copies source, templates, and Markdown without compiling.
 set(PACKAGE_DIR "lib/example-personal-site${PROJECT_VERSION}")
 install(FILES pkgIndex.tcl main.tcl usage.txt readme.md LICENSE DESTINATION "${PACKAGE_DIR}")
-install(DIRECTORY library sql assets content DESTINATION "${PACKAGE_DIR}")
+install(PROGRAMS start.sh DESTINATION "${PACKAGE_DIR}")
+install(DIRECTORY library assets content DESTINATION "${PACKAGE_DIR}")
 install(PROGRAMS bin/example-personal-site DESTINATION bin)
 
 include(CTest)

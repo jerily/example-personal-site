@@ -6,9 +6,7 @@
   <meta name="description" content="A Tcl developer's personal journal, working notes, and small experiments.">
   <title>{{ title }} · Alex Rivers</title>
   <link rel="stylesheet" href="{{ assets }}/style.css">
-  <link rel="stylesheet" href="{{ assets }}/editor.css">
   <link rel="stylesheet" href="/site.css">
-  {% if editing %}<script defer src="{{ assets }}/markdown-editor.bundle.js"></script>{% endif %}
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -21,7 +19,7 @@
       <a href="/">Home</a>
       <a href="/blog">Journal</a>
       <a href="/wiki">Notebook</a>
-      <a class="nav-about" href="/wiki/about-this-site">About <span aria-hidden="true">↗</span></a>
+      <a class="nav-about" href="/wiki/about">About <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
   <main id="main">{% block body %}{% endblock %}</main>
