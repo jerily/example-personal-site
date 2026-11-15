@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "tcl": ">=9.1.0,<10.0.0",
-    "twebserver": "^1.47.57",
+    "twebserver": "^1.47.58",
     "web-static-wiki": "=0.1.8",
     "web-static-blog": "=0.1.7",
     "tpathexp": "^1.2.0",
