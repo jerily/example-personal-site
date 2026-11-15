@@ -2,10 +2,9 @@
 # SPDX-FileCopyrightText: 2026 Neofytos Dimitriou (neo@jerily.cy)
 # SPDX-License-Identifier: MIT.
 
-# Worker state belongs to the worker interpreter, including its database and router.
-proc ::personal_site::worker {database port token} {
-    variable connection [connect $database]
-    variable routes [router $connection $token]
+# Worker state belongs to the worker interpreter, including its content and router.
+proc ::personal_site::worker {content port} {
+    variable routes [router $content]
     variable listen_port $port
 }
 
@@ -24,32 +23,24 @@ proc ::personal_site::process {context request} {
     ::twebserver::return_response [dict get $context conn] $result
 }
 
-proc ::personal_site::serve {database content port} {
-    file mkdir [file dirname $database]
-    set connection [connect $database]
+proc ::personal_site::serve {content port} {
+    # Fail invalid content or templates in the main interpreter before listening.
+    set validation [router $content]
+    $validation destroy
 
-    # Initialization completes before the HTTP worker can accept any requests.
-    try {
-        if {[initialize $connection $content]} {
-            puts "Initialized content in $database"
-        }
-    } finally {
-        ::tpersist::db_disconnect $connection
-    }
-
-    set token [binary encode hex [::twebserver::random_bytes 32]]
     set init [join [list \
         [list set auto_path $::auto_path] \
-        {package require example-personal-site 0.1.3} \
-        [list ::personal_site::worker $database $port $token]] \n]
-    set config [dict create rootdir [file dirname $database] \
+        {package require example-personal-site 0.2.0} \
+        [list ::personal_site::worker $content $port]] \n]
+    set config [dict create rootdir $content \
         max_request_read_bytes 4259840 gzip off]
     set server [::twebserver::create_server $config ::personal_site::process $init]
 
     try {
         ::twebserver::listen_server -http -host 127.0.0.1 -num_threads 1 $server $port
         puts "Personal site: http://localhost:$port"
-        puts "Edit or add journal entries and notebook pages in your browser. Ctrl-C stops the server."
+        puts "Content: $content"
+        puts "Edit the Markdown files, then restart to see changes. Ctrl-C stops the server."
         flush stdout
 
         ::twebserver::wait_signal
@@ -66,15 +57,14 @@ proc ::personal_site::main {arguments} {
         return
     }
 
-    # Keep runtime data in the consuming project, outside the installed package.
+    # Prefer content in the consuming project over the installed sample files.
     set base [expr {[info exists ::env(PROJECT_HOME)] ? $::env(PROJECT_HOME) : [pwd]}]
     set content [file join $base content]
     if {![file isdirectory $content]} {
         set content [file join $root content]
     }
 
-    set options [dict create --port 8080 \
-        --database [file join $base data personal-site.sqlite3] --content $content]
+    set options [dict create --port 8080 --content $content]
 
     if {[llength $arguments] % 2} {
         error "options require values; use --help"
@@ -92,7 +82,6 @@ proc ::personal_site::main {arguments} {
         error "--port must be between 1 and 65535"
     }
 
-    set database [file normalize [file join $base [dict get $options --database]]]
     set content [file normalize [file join $base [dict get $options --content]]]
-    serve $database $content $port
+    serve $content $port
 }

@@ -4,9 +4,9 @@ A notebook is useful even before it is complete. Keep a short list of questions 
 
 | Question | Small experiment |
 | --- | --- |
-| Does an edit survive a restart? | Edit a page, stop the server, and start it again. |
-| What happens to a stale editor tab? | Open two editors and save them in sequence. |
+| How does a change reach the browser? | Edit a Markdown file, restart the server, and refresh. |
+| What decides a page's URL? | Change its heading while keeping the filename. |
 | Can two packages share one host? | Follow the two mount calls in `library/http.tcl`. |
-| What makes initialization atomic? | Follow `db_transaction` in `library/storage.tcl`. |
+| What happens when a note is removed? | Delete a Markdown file and restart. |
 
-Add your own observations with the **Edit** button.
+Add your observations to this Markdown file in your editor.

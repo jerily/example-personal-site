@@ -8,8 +8,8 @@ A personal site that starts with one command. A little Tcl handles routing and l
 
 ## Learning
 
-How to keep application boundaries clear. The host owns connections and startup. The mounted packages own their tables, content rules, and editors.
+How to keep application boundaries clear. The host owns startup and routing. The mounted packages read Markdown and render the notebook and journal.
 
 ## Practicing
 
-Writing useful comments: explain why a connection belongs to a worker, rather than narrating every assignment.
+Writing useful comments: explain why each worker owns its content and router, rather than narrating every assignment.

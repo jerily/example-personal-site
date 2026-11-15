@@ -1,4 +1,4 @@
-/* The host's visual layer follows the package styles, including on editor pages. */
+/* The host's visual layer follows the read-only content package styles. */
 :root {
   --paper: #f8f6f0;
   --ink: #283b33;

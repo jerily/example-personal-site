@@ -3,4 +3,4 @@
 # SPDX-License-Identifier: MIT.
 
 # Register the package and load its dependencies.
-package ifneeded example-personal-site 0.1.3 [list source [file join $dir library personal-site.tcl]]
+package ifneeded example-personal-site 0.2.0 [list source [file join $dir library personal-site.tcl]]

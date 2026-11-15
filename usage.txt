@@ -1,15 +1,15 @@
-Usage: example-personal-site [--port 8080] [--database PATH] [--content DIRECTORY]
+Usage: example-personal-site [--port 8080] [--content DIRECTORY]
 
-Serves a personal site at http://localhost:8080 using twebserver.
-The server always binds to 127.0.0.1. Editing and creation are enabled.
+Serves a read-only personal site at http://localhost:8080 using twebserver.
+The local preview server always binds to 127.0.0.1.
 
-On first startup, content/wiki and content/blog seed a SQLite database.
-Subsequent starts use SQLite without importing again, preserving browser edits.
+Notebook pages come from content/wiki; journal entries come from content/blog.
+Edit the Markdown files and restart the server to refresh the content.
+There is no browser editor or site database.
 
 Defaults:
   --port       8080
-  --database   ./data/personal-site.sqlite3
   --content    ./content when present, otherwise the installed sample content
 
 Paths are relative to PROJECT_HOME under ttrek, or the current directory otherwise.
-Stop with Ctrl-C. Run --help to display this message.
+Both wiki and blog subdirectories must exist. Stop with Ctrl-C.
