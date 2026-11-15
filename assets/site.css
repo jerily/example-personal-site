@@ -109,3 +109,5 @@ pre { overflow-x: auto; }
   .make-it-yours > a { margin-left: 0; }
   .site-footer { flex-direction: column; gap: 7px; padding: 22px 20px; }
 }
+
+.markdown img { max-width: 100%; height: auto; }

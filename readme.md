@@ -7,10 +7,8 @@ build directory.
 
 ## Start with your own copy
 
-Once version 0.2.0 is published in the public registry:
-
 ```sh
-ttrek clone example-personal-site@0.2.0 -outdir my-personal-site
+ttrek clone example-personal-site -outdir my-personal-site
 cd my-personal-site
 ttrek install -y
 ttrek run -script start
@@ -28,11 +26,8 @@ ttrek install -y example-personal-site@0.2.0
 ttrek run -package example-personal-site -script start
 ```
 
-The source archive/registry release must be updated before these commands can
-retrieve this edition. It pins `web-static-wiki` 0.1.7 and `web-static-blog` 0.1.6
-in both the manifest and Tcl runtime. It requires twebserver 1.47.57 and
-tpathexp 1.2.0 or later compatible releases. The manifest selects Tcl 9.1 and
-matching native dependencies. The start script uses `{"file":"start.sh"}` notation.
+The example pins its content packages and uses `tpathexp` ^1.2.0. Routing
+belongs to `tpathexp`; `twebserver` calls the site's `process_conn` callback.
 
 Optional arguments work with either start script:
 
@@ -44,7 +39,7 @@ The installed `bin/example-personal-site` launcher also runs directly when the
 dependencies are on the Tcl package path. `TCLSH` selects an interpreter.
 Under ttrek, relative paths resolve against `PROJECT_HOME`. A project-local
 `content/` takes precedence over the installed samples; `--content` selects
-another root. Both `wiki/` and `blog/` subdirectories must exist, even if empty.
+another root. The `wiki/`, `blog/`, and `images/` subdirectories must exist, even if empty.
 
 ## Make it yours
 
@@ -72,6 +67,19 @@ templates and stylesheet. No database, import command, account, browser editor,
 or revision table is involved in this example. The content packages also support
 SQL stores, but this host uses their directory API.
 
+## Add images
+
+Put pictures in `content/images/`, for example `content/images/photo.jpg`.
+Use `![My photo](photo.jpg)` in any notebook page or journal post. Subfolders
+work too: `![My project](projects/photo.jpg)` reads
+`content/images/projects/photo.jpg`. Restart after adding files.
+
+The shared Tcl image renderer turns those references into `/images/...` URLs,
+independent of the page's address. The `tpathexp` image route serves the original
+bytes through `twebserver`. PNG, JPEG, GIF, WebP, AVIF, SVG, ICO and BMP are
+supported, up to 20 MiB each. Image references cannot escape the image directory.
+No AWS settings are needed for local images.
+
 ## How it works
 
 | File | Responsibility |
@@ -88,21 +96,10 @@ SQL stores, but this host uses their directory API.
 
 Startup validates the content and templates before listening. The worker creates
 its own stores and router, mounts the wiki at `/wiki` and the blog at `/blog`,
-and adds `/` and `/site.css`. The stores remain unchanged for that process;
+and adds `/`, `/site.css`, and `/images/...`. The stores remain unchanged for that process;
 a restart reads the files again. Templates and CSS live in `assets/`; Tcl code
 does not build HTML strings.
 
-## Moving from the editable example
-
-Version 0.2.0 replaces the SQLite/browser-editing workflow in 0.1.x. It does not
-read, overwrite or delete an existing `data/personal-site.sqlite3`, and
-`--database` is no longer an option. Before switching, copy any writing you want
-to keep from the old browser editor into Markdown files. The new site reads only
-those files; an old database is not imported automatically.
-
-URLs now follow filenames rather than headings. Rename your Markdown files to
-match any old URLs you want to keep, and update your navigation accordingly.
-The bundled About page is now `/wiki/about`.
 
 ## Verification
 

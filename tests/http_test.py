@@ -16,11 +16,12 @@ ROOT = Path(__file__).resolve().parents[1]
 LAUNCHER = Path(sys.argv[2]) if len(sys.argv) > 2 else ROOT / "bin/example-personal-site"
 
 
-def fetch(url, method="GET"):
+def fetch(url, method="GET", binary=False):
     request = urllib.request.Request(url, method=method)
     try:
         with urllib.request.urlopen(request, timeout=3) as response:
-            return response.status, response.read().decode()
+            body = response.read()
+            return response.status, body if binary else body.decode()
     except urllib.error.HTTPError as error:
         return error.code, error.read().decode()
 
@@ -59,6 +60,11 @@ def main():
     with tempfile.TemporaryDirectory() as folder:
         content = Path(folder) / "content"
         shutil.copytree(ROOT / "content", content)
+        image_bytes = bytes.fromhex("89504e470d0a1a0a00ff80")
+        (content / "images/photo.png").write_bytes(image_bytes)
+        (content / "wiki/nested").mkdir()
+        (content / "wiki/nested/image.md").write_text("# Image\n![Photo](photo.png)")
+        (content / "blog/2026-11-16-images.md").write_text("# Images\n![Photo](photo.png)")
         with tempfile.TemporaryFile(mode="w+") as log:
             try:
                 process = start(content, port, log)
@@ -71,6 +77,12 @@ def main():
                         assert fetch(base + f"/{kind}/_new")[0] == 404
                         assert fetch(base + f"/{kind}/_new", "POST")[0] == 405
                     assert fetch(base + "/wiki/about", "HEAD") == (200, "")
+                    for path in ("/wiki/nested/image", "/blog/2026-11-16-images"):
+                        assert 'src="/images/photo.png"' in fetch(base + path)[1]
+                    assert fetch(base + "/images/photo.png", binary=True) == (200, image_bytes)
+                    assert fetch(base + "/images/photo.png", "HEAD", binary=True) == (200, b"")
+                    assert fetch(base + "/images/%2e%2e/secret.png")[0] == 400
+                    assert fetch(base + "/images/not-present.png")[0] == 404
                     (content / "wiki/about.md").write_text("# A new title\nChanged in a file.\n")
                     (content / "wiki/hello.md").write_text("# Hello\nA new note.\n")
                     (content / "blog/2026-11-15-hello.md").write_text("# Hello journal\nA new post.\n")

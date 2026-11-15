@@ -8,7 +8,7 @@ proc ::personal_site::worker {content port} {
     variable listen_port $port
 }
 
-proc ::personal_site::process {context request} {
+proc ::personal_site::process_conn {context request} {
     variable routes
     variable listen_port
 
@@ -34,7 +34,7 @@ proc ::personal_site::serve {content port} {
         [list ::personal_site::worker $content $port]] \n]
     set config [dict create rootdir $content \
         max_request_read_bytes 4259840 gzip off]
-    set server [::twebserver::create_server $config ::personal_site::process $init]
+    set server [::twebserver::create_server $config ::personal_site::process_conn $init]
 
     try {
         ::twebserver::listen_server -http -host 127.0.0.1 -num_threads 1 $server $port

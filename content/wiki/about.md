@@ -17,3 +17,5 @@ Your Markdown files are the source of truth. The browser presents the finished p
 - `content/` contains the Markdown, read afresh at startup.
 
 The local preview needs no database, cloud setup, or account.
+
+![A notebook and a growing personal website](notebook.svg)

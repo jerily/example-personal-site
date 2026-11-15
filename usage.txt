@@ -12,4 +12,4 @@ Defaults:
   --content    ./content when present, otherwise the installed sample content
 
 Paths are relative to PROJECT_HOME under ttrek, or the current directory otherwise.
-Both wiki and blog subdirectories must exist. Stop with Ctrl-C.
+The wiki, blog, and images subdirectories must exist. Stop with Ctrl-C.

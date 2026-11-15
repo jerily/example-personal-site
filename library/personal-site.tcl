@@ -4,8 +4,8 @@
 
 # Load the read-only content packages.
 package require Tcl 8.6 9
-package require -exact web-static-wiki 0.1.7
-package require -exact web-static-blog 0.1.6
+package require -exact web-static-wiki 0.1.8
+package require -exact web-static-blog 0.1.7
 package require twebserver 1.47.57
 package require tpathexp 1.2.0
 

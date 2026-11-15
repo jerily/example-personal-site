@@ -86,6 +86,7 @@ proc ::personal_site::router {content} {
 
     $router add GET / [list ::personal_site::home $collections $templates] -strict true
     $router add GET /site.css ::personal_site::stylesheet -strict true
+    $router add GET /images/:path(.*) [list ::web::static::wiki::serve_image [dict get $collections wiki]] -strict true
 
     return $router
 }
