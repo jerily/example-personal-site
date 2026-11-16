@@ -22,7 +22,7 @@ is needed because the example already includes `ttrek.json`.
 You can also try the installed package in an initialized ttrek project:
 
 ```sh
-ttrek install -y example-personal-site@0.2.0
+ttrek install -y example-personal-site@0.2.1
 ttrek run -package example-personal-site -script start
 ```
 

@@ -2,10 +2,10 @@
 
 A website can feel like a big project before you have written anything. Start with one page instead. Say who you are, write down something useful, and give yourself a reason to come back.
 
-This example already supplies the layout and the server. To get your own copy of the static edition once version 0.2.0 is published:
+This example already supplies the layout and the server. To get your own copy of the static edition with version 0.2.1:
 
 ```sh
-ttrek clone example-personal-site@0.2.0 -outdir my-personal-site
+ttrek clone example-personal-site@0.2.1 -outdir my-personal-site
 cd my-personal-site
 ttrek install -y
 ttrek run -script start
