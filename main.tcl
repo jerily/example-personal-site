@@ -1,6 +1,12 @@
+# 
+# Copyright Jerily LTD. All Rights Reserved.
+# SPDX-FileCopyrightText: 2026 Neofytos Dimitriou (neo@jerily.cy)
+# SPDX-License-Identifier: MIT.
+# 
+
 # This entry point works from both a checkout and the installed package directory.
 lappend auto_path [file dirname [file normalize [info script]]]
-package require example-personal-site 0.2.0
+package require example-personal-site 0.2.1
 
 try {
     ::personal_site::main $argv

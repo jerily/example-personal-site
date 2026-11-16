@@ -1,6 +1,8 @@
+# 
 # Copyright Jerily LTD. All Rights Reserved.
 # SPDX-FileCopyrightText: 2026 Neofytos Dimitriou (neo@jerily.cy)
 # SPDX-License-Identifier: MIT.
+# 
 
 # Worker state belongs to the worker interpreter, including its content and router.
 proc ::personal_site::worker {content port} {
@@ -30,7 +32,7 @@ proc ::personal_site::serve {content port} {
 
     set init [join [list \
         [list set auto_path $::auto_path] \
-        {package require example-personal-site 0.2.0} \
+        {package require example-personal-site 0.2.1} \
         [list ::personal_site::worker $content $port]] \n]
     set config [dict create rootdir $content \
         max_request_read_bytes 4259840 gzip off]
