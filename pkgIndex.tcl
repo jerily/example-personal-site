@@ -6,4 +6,4 @@
 
 # Register the package and load its dependencies.
 if {![package vsatisfies [package provide Tcl] 9.1-10]} {return}
-package ifneeded example-personal-site 0.2.1 [list source [file join $dir library personal-site.tcl]]
+package ifneeded example-personal-site 0.2.2 [list source [file join $dir library personal-site.tcl]]

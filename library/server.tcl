@@ -32,7 +32,7 @@ proc ::personal_site::serve {content port} {
 
     set init [join [list \
         [list set auto_path $::auto_path] \
-        {package require example-personal-site 0.2.1} \
+        {package require example-personal-site 0.2.2} \
         [list ::personal_site::worker $content $port]] \n]
     set config [dict create rootdir $content \
         max_request_read_bytes 4259840 gzip off]
