@@ -1,6 +1,6 @@
 {
   "name": "example-personal-site",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "scripts": {
     "start": {
       "file": "start.sh"
@@ -9,8 +9,8 @@
   "dependencies": {
     "tcl": ">=9.1.0,<10.0.0",
     "twebserver": "^1.47.58",
-    "web-static-wiki": "=0.1.9",
-    "web-static-blog": "=0.1.8",
+    "web-static-wiki": "=0.1.10",
+    "web-static-blog": "=0.1.9",
     "tpathexp": "^1.2.0",
     "jinja2-tcl": "^0.1.1",
     "tjson": "^1.0.27"
